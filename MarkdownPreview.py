@@ -19,7 +19,12 @@ except:
 
 def getTempMarkdownPreviewPath(view):
     ''' return a permanent full path of the temp markdown preview file '''
-    tmp_filename = '%s.html' % view.id()
+    
+    if view.file_name() is not None:
+        tmp_filename = os.path.splitext(os.path.basename(view.file_name()))[0] + ".html"
+    else:
+        tmp_filename = '%s.html' % view.id()
+    
     if settings.get('path_tempfile'):
         tmp_fullpath = os.path.join(settings.get('path_tempfile'), tmp_filename)
     else:
